@@ -8,6 +8,7 @@ public class Dossier {
     private ArrayList<Document> docs;
 
     public Dossier(String label, int capacity) {
+        docs = new ArrayList<Document>();
         this.label = label;
         this.capacity = capacity;
     }
@@ -16,7 +17,7 @@ public class Dossier {
         if (document.getPages() + getCurrentSize() <= capacity) {
             docs.add(document);
         } else {
-            System.out.println("Throw exception, choose another file or open a new one");
+            System.out.println("Choose another file or open a new one"); //Throw exception or something.
         }
     }
 

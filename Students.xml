@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Students>
+    <Student>
+        <firstName>Andrea</firstName>
+        <lastName>Szoboszlai</lastName>
+        <yearOfBirth>1991</yearOfBirth>
+        <gender>FEMALE</gender>
+        <whichClass>12.D</whichClass>
+    </Student>
+    <Student>
+        <firstName>Orsolya</firstName>
+        <lastName>Buha</lastName>
+        <yearOfBirth>1991</yearOfBirth>
+        <gender>FEMALE</gender>
+        <whichClass>12.D</whichClass>
+    </Student>
+    <Student>
+        <firstName>Gergely</firstName>
+        <lastName>Németh</lastName>
+        <yearOfBirth>1991</yearOfBirth>
+        <gender>MALE</gender>
+        <whichClass>12.C</whichClass>
+    </Student>
+</Students>

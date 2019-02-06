@@ -28,4 +28,9 @@ public class Person {
     public Gender getGender() {
         return gender;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + firstName + " " + lastName + ", Birth year: " + yearOfBirth + ", Gender: " + gender;
+    }
 }

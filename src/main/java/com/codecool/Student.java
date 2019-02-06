@@ -11,4 +11,9 @@ public class Student extends Person{
     public String getWhichClass() {
         return whichClass;
     }
+
+    @Override
+    public String toString() {
+        return super(toString()) + "Class: " +
+    }
 }

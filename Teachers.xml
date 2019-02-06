@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Teachers>
+    <Teacher>
+        <firstName>Tibor</firstName>
+        <lastName>Simon</lastName>
+        <yearOfBirth>1970</yearOfBirth>
+        <gender>MALE</gender>
+        <wage>135000</wage>
+    </Teacher>
+    <Teacher>
+        <firstName>Nóra</firstName>
+        <lastName>Kunos</lastName>
+        <yearOfBirth>1975</yearOfBirth>
+        <gender>FEMALE</gender>
+        <wage>125000</wage>
+    </Teacher>
+</Teachers>

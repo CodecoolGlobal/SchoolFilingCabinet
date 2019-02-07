@@ -1,6 +1,6 @@
 package com.codecool;
 
-public abstract class Person {
+public abstract class Person  implements java.io.Serializable {
     private String firstName;
     private String lastName;
     private int yearOfBirth;

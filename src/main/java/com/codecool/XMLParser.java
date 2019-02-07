@@ -6,7 +6,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
-public abstract class XMLParser {
+public abstract class XMLParser  implements java.io.Serializable {
 
     protected Document doc;
 

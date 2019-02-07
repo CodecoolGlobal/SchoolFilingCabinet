@@ -1,11 +1,11 @@
 package com.codecool;
 
-public class Document {
+public class Document  implements java.io.Serializable {
     private String label;
     private int pages;
     private Person person;
 
-    public Document(String label, int pages, Person person) {
+    public Document (String label, int pages, Person person) {
         this.label = label;
         this.pages = pages;
         this.person = person;

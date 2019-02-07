@@ -1,24 +1,26 @@
 package com.codecool;
 
-import java.sql.SQLOutput;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Menu {
-    private Scanner reader;
+public class MainMenu implements Serializable  {
+    private transient Scanner reader;
     private ArrayList<Dossier> dossiers;
     XmlForStudents students;
     XmlForTeachers teachers;
 
-    public Menu() {
+
+
+    public MainMenu() {
         students = new XmlForStudents("./Students.xml");
         teachers = new XmlForTeachers("./Teachers.xml");
         FilingCabinet cabinet = new FilingCabinet(20);
-        reader = new Scanner(System.in);
+        this.reader = reader;
         dossiers = new ArrayList<Dossier>();
     }
 
-    public void start() {
+    public void start(Scanner reader1) {
         String[] options = {"Dossiers menu",
                 "Documents menu",
                 "Teachers menu",
@@ -30,7 +32,7 @@ public class Menu {
         showMainMenu(options);
         while (true) {
             System.out.println("Choose an option from the above listed: ");
-            chosen = reader.nextLine();
+            chosen = reader1.nextLine();
             if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("4") || chosen.equals("5") || chosen.equals("0")) {
                 break;
             }
@@ -39,20 +41,39 @@ public class Menu {
 
         int chosenInt = Integer.parseInt(chosen);
         switch (chosenInt) {
-            case 1: dossiersMenu();
+            case 1: dossiersMenu( reader1);
                     break;
-            case 2: documentMenu();
+            case 2: documentMenu(reader1);
                     break;
-            case 3: teachersMenu();
+            case 3: teachersMenu(reader1);
                     break;
-            case 4: //studentMenu();
+            case 4: studentMenu(reader1);
                     break;
-            case 5: //saveMenu();
+            case 5: saveMenu();
                     break;
             case 0:
                     break;
 
         }
+    }
+
+
+
+    private void saveMenu() {
+        try {
+            save();
+            System.out.println("Data saved!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save() throws IOException {
+        FileOutputStream fileOut = new FileOutputStream("./FilingCabinet.ser");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(this);
+        out.close();
+        fileOut.close();
     }
 
     public void showMainMenu(String[] options) {
@@ -66,9 +87,9 @@ public class Menu {
         System.out.println(0 + ". " + options[options.length-1]);
     }
 
-    public void dossiersMenu() {
+    public void dossiersMenu(Scanner reader) {
         String chosen;
-        String[] options = {"List all dossiers", "Add dossier", "Throw out dossier", "Back to Main Menu"};
+        String[] options = {"List all dossiers", "Add dossier", "Throw out dossier", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
@@ -84,12 +105,12 @@ public class Menu {
             switch (chosenInt) {
                 case 1: listAllDossiers();
                         break;
-                case 2: addDossier();
+                case 2: addDossier(reader);
                         break;
-                case 3: removeDossier();
+                case 3: removeDossier(reader);
                         break;
                 case 0: toQuit = 0;
-                        start();
+                        start(reader);
                         break;
 
             }
@@ -97,9 +118,9 @@ public class Menu {
 
     }
 
-    public void documentMenu() {
+    public void documentMenu(Scanner reader) {
         String chosen;
-        String[] options = {"List all documents", "Add document", "Throw out document", "Back to Main Menu"};
+        String[] options = {"List all documents", "Add document", "Throw out document", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
@@ -115,20 +136,20 @@ public class Menu {
             switch (chosenInt) {
                 case 1: listAllDocuments();
                         break;
-                case 2: addDocuments();
+                case 2: addDocuments(reader);
                         break;
-                case 3: removeDocuments();
+                case 3: removeDocuments(reader);
                         break;
                 case 0: toQuit = 0;
-                        start();
+                        start(reader);
                         break;
             }
         }
     }
 
-    public void teachersMenu() {
+    public void teachersMenu(Scanner reader) {
         String chosen;
-        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Back to Main Menu"};
+        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
@@ -149,15 +170,15 @@ public class Menu {
                 case 3: //removeTeacher();
                         break;
                 case 0: toQuit = 0;
-                        start();
+                        start(reader);
                         break;
             }
         }
     }
 
-    public void studentMenu() {
+    public void studentMenu(Scanner reader) {
         String chosen;
-        String[] options = {"List all students", "Add document", "Throw out document", "Back to Main Menu"};
+        String[] options = {"List all students", "Add document", "Throw out document", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
@@ -172,21 +193,18 @@ public class Menu {
             int chosenInt = Integer.parseInt(chosen);
             switch (chosenInt) {
                 case 1: listAllStudents();
-                    break;
+                        break;
                 case 2: //addStudents();
-                    break;
+                        break;
                 case 3: //removeStudents();
-                    break;
+                        break;
                 case 0: toQuit = 0;
-                    start();
-                    break;
+                        start(reader);
+                        break;
             }
         }
     }
 
-    public void saveMenu() {
-
-    }
 
     public void listAllDossiers() {
         if (dossiers.size() == 0) {
@@ -198,7 +216,7 @@ public class Menu {
         }
     }
 
-    public void addDossier() {
+    public void addDossier(Scanner reader) {
         if (dossiers.size() < 50) {
             System.out.println("Label of the new dossier:");
             String label = reader.nextLine();
@@ -210,7 +228,7 @@ public class Menu {
         }
     }
 
-    public void removeDossier() {
+    public void removeDossier(Scanner reader) {
         System.out.println("Label of the dossier you'd like to remove: ");
         String label = reader.nextLine();
         Dossier toRemove = null;
@@ -234,7 +252,7 @@ public class Menu {
         }
     }
 
-    public void addDocuments() {
+    public void addDocuments(Scanner reader) {
         String chosen;
         System.out.println("Give a label");
         String label = reader.nextLine();
@@ -271,6 +289,8 @@ public class Menu {
         }
         if (retDoss == null) {
             System.out.println("No dossier was found with the name: " + dossierName );
+            System.out.println("You can add one now from the main menu.");
+            ///start();
             return null;
         }
         return retDoss;
@@ -281,7 +301,7 @@ public class Menu {
         for (Teacher element : teachers.getTeachersList()) {
             String fullName = element.getFirstName() + " " + element.getLastName();
             if (fullName.equals(name)) {
-
+                person = element;
             }
         }
         if (person == null) {
@@ -294,19 +314,20 @@ public class Menu {
     public Student findStudent(String name) {
         Student person = null;
         for (Student element : students.getStudentList()) {
+
             String fullName = element.getFirstName() + " " + element.getLastName();
             if (fullName.equals(name)) {
-
+                person = element;
             }
         }
         if (person == null) {
-            System.out.println("No dossier was found with the name: " + name );
+            System.out.println("No student was found with the name: " + name );
             return null;
         }
         return person;
     }
 
-    public void removeDocuments() {
+    public void removeDocuments(Scanner reader) {
         System.out.println("Label of the document you'd like to remove: ");
         String label = reader.nextLine();
         System.out.println("Which dossier do you want to remove the document from: ");
@@ -326,6 +347,10 @@ public class Menu {
             System.out.println(element.toString());
         }
     }
+
+
+
+
 
 
 

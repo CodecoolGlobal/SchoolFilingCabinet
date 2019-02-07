@@ -43,7 +43,7 @@ public class Menu {
                     break;
             case 2: documentMenu();
                     break;
-            case 3: //teachersMenu();
+            case 3: teachersMenu();
                     break;
             case 4: //studentMenu();
                     break;
@@ -128,6 +128,35 @@ public class Menu {
 
     public void teachersMenu() {
         String chosen;
+        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Back to Main Menu"};
+        showMainMenu(options);
+        int toQuit = 1;
+        while (toQuit != 0) {
+            while (true) {
+                System.out.println("Choose an option from the above listed: ");
+                chosen = reader.nextLine();
+                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("0")) {
+                    break;
+                }
+            }
+
+            int chosenInt = Integer.parseInt(chosen);
+            switch (chosenInt) {
+                case 1: listAllTeachers();
+                        break;
+                case 2: //addTeacher();
+                        break;
+                case 3: //removeTeacher();
+                        break;
+                case 0: toQuit = 0;
+                        start();
+                        break;
+            }
+        }
+    }
+
+    public void studentMenu() {
+        String chosen;
         String[] options = {"List all students", "Add document", "Throw out document", "Back to Main Menu"};
         showMainMenu(options);
         int toQuit = 1;
@@ -153,10 +182,6 @@ public class Menu {
                     break;
             }
         }
-    }
-
-    public void studentMenu() {
-
     }
 
     public void saveMenu() {
@@ -290,9 +315,15 @@ public class Menu {
         dossier.removeDocFromDossier(label);
     }
 
+    public void listAllTeachers() {
+        for (Teacher element : teachers.getTeachersList()) {
+            System.out.println(element.toString());
+        }
+    }
+
     public void listAllStudents() {
         for (Student element : students.getStudentList()) {
-            element.toString();
+            System.out.println(element.toString());
         }
     }
 

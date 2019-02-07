@@ -1,6 +1,6 @@
 package com.codecool;
 
-public class Person {
+public abstract class Person {
     private String firstName;
     private String lastName;
     private int yearOfBirth;
@@ -29,8 +29,5 @@ public class Person {
         return gender;
     }
 
-    @Override
-    public String toString() {
-        return "Name: " + firstName + " " + lastName + ", Birth year: " + yearOfBirth + ", Gender: " + gender;
-    }
+
 }

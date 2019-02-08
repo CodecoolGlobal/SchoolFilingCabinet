@@ -9,15 +9,20 @@ public class MainMenu implements Serializable  {
     private ArrayList<Dossier> dossiers;
     XmlForStudents students;
     XmlForTeachers teachers;
-
+    ArrayList<Teacher> teacherList;
+    ArrayList<Student> studentList;
+    WriteToXml saveToXml;
 
 
     public MainMenu() {
+        saveToXml = new WriteToXml();
         students = new XmlForStudents("./Students.xml");
         teachers = new XmlForTeachers("./Teachers.xml");
         FilingCabinet cabinet = new FilingCabinet(20);
         this.reader = reader;
         dossiers = new ArrayList<Dossier>();
+        teacherList = teachers.getTeachersList();
+        studentList = students.getStudentList();
     }
 
     public void start(Scanner reader1) {
@@ -56,8 +61,6 @@ public class MainMenu implements Serializable  {
 
         }
     }
-
-
 
     private void saveMenu() {
         try {
@@ -149,14 +152,14 @@ public class MainMenu implements Serializable  {
 
     public void teachersMenu(Scanner reader) {
         String chosen;
-        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Back to Main MainMenu"};
+        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Save changes to XML file", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
-                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("0")) {
+                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("4") ||  chosen.equals("0")) {
                     break;
                 }
             }
@@ -165,9 +168,11 @@ public class MainMenu implements Serializable  {
             switch (chosenInt) {
                 case 1: listAllTeachers();
                         break;
-                case 2: //addTeacher();
+                case 2: addPerson(reader, "Teacher");
                         break;
-                case 3: //removeTeacher();
+                case 3: removePerson(reader, "Teacher");
+                        break;
+                case 4: saveToXml.writeToTeacherXml(teacherList, "Teacher");
                         break;
                 case 0: toQuit = 0;
                         start(reader);
@@ -185,7 +190,7 @@ public class MainMenu implements Serializable  {
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
-                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("0")) {
+                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("4") || chosen.equals("0")) {
                     break;
                 }
             }
@@ -194,9 +199,11 @@ public class MainMenu implements Serializable  {
             switch (chosenInt) {
                 case 1: listAllStudents();
                         break;
-                case 2: //addStudents();
+                case 2: addPerson(reader, "Student");
                         break;
-                case 3: //removeStudents();
+                case 3: removePerson(reader, "Student");
+                        break;
+                case 4: saveToXml.writeToStudentXml(studentList, "Student");
                         break;
                 case 0: toQuit = 0;
                         start(reader);
@@ -204,7 +211,6 @@ public class MainMenu implements Serializable  {
             }
         }
     }
-
 
     public void listAllDossiers() {
         if (dossiers.size() == 0) {
@@ -345,6 +351,55 @@ public class MainMenu implements Serializable  {
     public void listAllStudents() {
         for (Student element : students.getStudentList()) {
             System.out.println(element.toString());
+        }
+    }
+
+    public void addPerson(Scanner reader, String kindOfPerson){
+        System.out.println("First name of the "+ kindOfPerson + ":");
+        String fName = reader.nextLine();
+        System.out.println("Last name of the "+ kindOfPerson + ":");
+        String lName = reader.nextLine();
+        System.out.println("Birth year:");
+        int year = Integer.parseInt(reader.nextLine());
+        System.out.println("Gender (FEMALE / MALE):");
+        Gender gender = Gender.valueOf(reader.nextLine());
+        if (kindOfPerson.equals("Teacher")) {
+            System.out.println("Wage");
+            int wage = Integer.parseInt(reader.nextLine());
+            teacherList.add(new Teacher(fName, lName, year, gender, wage));
+        } else if (kindOfPerson.equals("Student")) {
+            System.out.println("Which class: ");
+            String whichClass = reader.nextLine();
+            studentList.add(new Student(fName, lName, year, gender, whichClass));
+        }
+    }
+
+    public void removePerson(Scanner reader, String kindOfPerson) {
+        Teacher toRemove = null;
+        Student toRem = null;
+        System.out.println("Name of the person you want to remove from the list: ");
+        String name = reader.nextLine();
+        if (kindOfPerson.equals("Teacher")) {
+            toRemove = findTeacher(name);
+            for (Teacher element : teacherList) {
+                String fullName = element.getFirstName() + " " + element.getLastName();
+                if (fullName.equals(name)) {
+                    toRemove = element;
+                }
+            }
+        } else if (kindOfPerson.equals("Student")) {
+            toRem = findStudent(name);
+            for (Student element : studentList) {
+                String fullName = element.getFirstName() + " " + element.getLastName();
+                if (fullName.equals(name)) {
+                    toRem = element;
+                }
+            }
+        }
+        if (kindOfPerson.equals("Teacher")) {
+            teacherList.remove(toRemove);
+        } else if (kindOfPerson.equals("Student")) {
+            studentList.remove(toRem);
         }
     }
 

@@ -7,13 +7,13 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args){
-        MainMenu mainMenu1;
+        MainMenu mainMenu1 = null;
         Scanner reader = new Scanner(System.in);
         System.out.println("Do you want to load the saved data?");
         String answer = reader.nextLine();
         if (answer.equals("no")) {
             mainMenu1 = new MainMenu();
-        } else {
+        } else if (answer.equals("yes")) {
             mainMenu1 = loadGame();
         }
         mainMenu1.start(reader);

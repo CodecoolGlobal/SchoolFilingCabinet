@@ -1,6 +1,7 @@
 package com.codecool;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Dossier implements java.io.Serializable {
     private String label;

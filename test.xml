@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Students>
+    <Student>
+        <firstName>yong</firstName>
+        <lastName>mook kim</lastName>
+        <yearOfBirth>mkyong</yearOfBirth>
+        <gender>100000</gender>
+        <whichClass>100000</whichClass>
+    </Student>
+</Students>

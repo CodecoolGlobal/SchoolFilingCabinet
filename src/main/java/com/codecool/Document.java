@@ -26,4 +26,6 @@ public class Document  implements java.io.Serializable {
     public String toString() {
         return ("Document's name: " + label + ", How many pages: " + pages + ", Whose document it is: " + person.getFirstName() + " " + person.getLastName() );
     }
+
+
 }

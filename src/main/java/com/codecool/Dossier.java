@@ -1,12 +1,15 @@
 package com.codecool;
 
+import javax.print.Doc;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
-public class Dossier implements java.io.Serializable {
+public class Dossier implements java.io.Serializable, Iterable<Document> {
     private String label;
     private int capacity;
     private ArrayList<Document> docs;
+    private int filledOut;
 
     public Dossier(String label, int capacity) {
         docs = new ArrayList<Document>();
@@ -35,7 +38,7 @@ public class Dossier implements java.io.Serializable {
     }
     @Override
     public String toString() {
-        return ("Label: " + label + ", Capacity: "+ capacity);
+        return ("Label: " + label + ", Capacity: "+ capacity + ", Filled up to: " + filledOut + " pages");
     }
 
     public void allDocsInDossier() {
@@ -66,4 +69,21 @@ public class Dossier implements java.io.Serializable {
             docs.remove(doc);
         }
     }
+
+    public void listAll() {
+        Iterator<Document> it = docs.iterator();
+        while (it.hasNext()) {
+            Document doc = it.next();
+            filledOut += doc.getPages();
+            System.out.println(doc);
+        }
+    }
+
+    @Override
+    public Iterator<Document> iterator() {
+        return docs.iterator();
+
+    }
+
+
 }

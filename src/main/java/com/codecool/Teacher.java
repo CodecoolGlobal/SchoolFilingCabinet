@@ -20,4 +20,17 @@ public class Teacher extends Person {
     public String toString() {
         return "Name: " + getFirstName() + " " + getLastName() + ", Birth year: " + getYearOfBirth() + ", Gender: " + getGender() + ", Wage: "+ wage;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (! super.equals(o)) return false;
+        if (!(o instanceof Teacher)) return false;
+        Teacher teacher = (Teacher) o;
+        return wage == teacher.wage;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

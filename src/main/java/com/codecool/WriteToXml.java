@@ -1,6 +1,7 @@
 package com.codecool;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,11 +12,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class WriteToXml {
+public class WriteToXml implements Serializable {
 
     public void writeToTeacherXml(ArrayList<Teacher> teacher, String type) {
         DocumentBuilder docBuilder = null;

@@ -21,4 +21,11 @@
         <gender>FEMALE</gender>
         <wage>120000</wage>
     </Teacher>
+    <Teacher>
+        <firstName>X</firstName>
+        <lastName>Y</lastName>
+        <yearOfBirth>1987</yearOfBirth>
+        <gender>MALE</gender>
+        <wage>12</wage>
+    </Teacher>
 </Teachers>

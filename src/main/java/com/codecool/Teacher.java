@@ -28,9 +28,4 @@ public class Teacher extends Person {
         Teacher teacher = (Teacher) o;
         return wage == teacher.wage;
     }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 }

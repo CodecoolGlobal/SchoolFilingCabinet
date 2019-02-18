@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainMenu{
+public class MainMenu {
     private Scanner reader = new Scanner(System.in);
 
     XmlForStudents students;
@@ -46,20 +46,26 @@ public class MainMenu{
 
         int chosenInt = Integer.parseInt(chosen);
         switch (chosenInt) {
-            case 1: dossiersMenu();
-                    break;
-            case 2: documentMenu();
-                    break;
-            case 3: teachersMenu();
-                    break;
-            case 4: studentMenu();
-                    break;
-            case 5: cabinet.saveMenu();
-                    break;
-            case 6: cabinet = loadMenu();
-                    start();
+            case 1:
+                dossiersMenu();
+                break;
+            case 2:
+                documentMenu();
+                break;
+            case 3:
+                teachersMenu();
+                break;
+            case 4:
+                studentMenu();
+                break;
+            case 5:
+                cabinet.saveMenu();
+                break;
+            case 6:
+                cabinet = loadMenu();
+                start();
             case 0:
-                    break;
+                break;
 
         }
     }
@@ -83,11 +89,11 @@ public class MainMenu{
 
         System.out.println("  ");
 
-        for (int i = 0; i < options.length - 1; i++ ) {
+        for (int i = 0; i < options.length - 1; i++) {
             int num = i + 1;
             System.out.println(num + ". " + options[i]);
         }
-        System.out.println(0 + ". " + options[options.length-1]);
+        System.out.println(0 + ". " + options[options.length - 1]);
     }
 
     public void dossiersMenu() {
@@ -106,21 +112,25 @@ public class MainMenu{
 
             int chosenInt = Integer.parseInt(chosen);
             switch (chosenInt) {
-                case 1: listAllDossiers();
+                case 1:
+                    listAllDossiers();
+                    break;
+                case 2:
+                    addDossier();
+                    break;
+                case 3:
+                    try {
+                        removeDossier();
+                    } catch (NoSuchDossierException ex) {
+                        System.out.println(ex.getMessage());
+                        System.out.println("You can add one now from the main menu");
                         break;
-                case 2: addDossier();
-                        break;
-                case 3: try {
-                            removeDossier();
-                        } catch (NoSuchDossierException ex) {
-                            System.out.println(ex.getMessage());
-                            System.out.println("You can add one now from the main menu");
-                            break;
-                        }
-                        break;
-                case 0: toQuit = 0;
-                        start();
-                        break;
+                    }
+                    break;
+                case 0:
+                    toQuit = 0;
+                    start();
+                    break;
 
             }
         }
@@ -143,59 +153,66 @@ public class MainMenu{
 
             int chosenInt = Integer.parseInt(chosen);
             switch (chosenInt) {
-                case 1: listAllDocuments();
-                        break;
-                case 2: addDocuments();
-                        break;
-                case 3: removeDocuments();
-                        break;
-                case 0: toQuit = 0;
-                        start();
-                        break;
+                case 1:
+                    listAllDocuments();
+                    break;
+                case 2:
+                    addDocuments();
+                    break;
+                case 3:
+                    removeDocuments();
+                    break;
+                case 0:
+                    toQuit = 0;
+                    start();
+                    break;
             }
         }
     }
 
     public void teachersMenu() {
         String chosen;
-        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Save changes to XML file", "Test EQ", "Back to Main MainMenu"};
+        String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Save changes to XML file", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
-                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("4") || chosen.equals("5") ||  chosen.equals("0")) {
+                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("4") || chosen.equals("4") || chosen.equals("0")) {
                     break;
                 }
             }
 
             int chosenInt = Integer.parseInt(chosen);
             switch (chosenInt) {
-                case 1: listAllTeachers();
-                        break;
-                case 2: try {
-                            addPerson(reader, "Teacher");
-                        } catch (PersonAlreadyExistsException ex)  {
-                            System.out.println(ex.getMessage());
-                        }
-                        break;
-                case 3: removePerson(reader, "Teacher");
-                        break;
-                case 4: saveToXml.writeToTeacherXml(teacherList, "Teacher");
-                        break;
-                case 5:
-                    System.out.println(teacherList.get(0).equals(teacherList.get(3)));
-                case 0: toQuit = 0;
-                        start();
-                        break;
+                case 1:
+                    listAllTeachers();
+                    break;
+                case 2:
+                    try {
+                        addPerson(reader, "Teacher");
+                    } catch (PersonAlreadyExistsException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    break;
+                case 3:
+                    removePerson(reader, "Teacher");
+                    break;
+                case 4:
+                    saveToXml.writeToTeacherXml(teacherList, "Teacher");
+                    break;
+                case 0:
+                    toQuit = 0;
+                    start();
+                    break;
             }
         }
     }
 
     public void studentMenu() {
         String chosen;
-        String[] options = {"List all students", "Add document", "Throw out document", "Back to Main MainMenu"};
+        String[] options = {"List all students", "Add student", "Remove teacher", "Save changes to XML file", "Back to Main MainMenu"};
         showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
@@ -211,19 +228,21 @@ public class MainMenu{
             switch (chosenInt) {
                 case 1: listAllStudents();
                         break;
-                case 2: try {
-                            addPerson(reader, "Student");
-                        } catch (PersonAlreadyExistsException ex)  {
-                            System.out.println(ex.getMessage());
-                        }
-                        break;
+                case 2:
+                    try {
+                        addPerson(reader, "Student");
+                    } catch (PersonAlreadyExistsException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    break;
                 case 3: removePerson(reader, "Student");
                         break;
                 case 4: saveToXml.writeToStudentXml(studentList, "Student");
-                        break;
-                case 0: toQuit = 0;
-                        start();
-                        break;
+                     break;
+                case 0:
+                    toQuit = 0;
+                    start();
+                    break;
             }
         }
     }
@@ -257,7 +276,7 @@ public class MainMenu{
         String label = reader.nextLine();
         Dossier toRemove = null;
         for (Dossier element : cabinet.getDossierList()) {
-            if ( element.getLabel().equals(label)) {
+            if (element.getLabel().equals(label)) {
                 toRemove = element;
             }
         }
@@ -270,7 +289,7 @@ public class MainMenu{
     }
 
     public void listAllDocuments() {
-        for ( Dossier element : cabinet.getDossierList()) {
+        for (Dossier element : cabinet.getDossierList()) {
             System.out.println(element.getLabel());
             element.allDocsInDossier();
         }
@@ -297,28 +316,20 @@ public class MainMenu{
             if (num == 1) {
                 System.out.println("Give a teacher's name: ");
                 String tName = reader.nextLine();
-                try {
-                    dossier.addDocs(new Document(label, pages, findTeacher(tName)));
-                } catch (NoPersonException ex) {
-                    System.out.println(ex.getMessage());
-                }
+                dossier.addDocs(new Document(label, pages, findTeacher(tName)));
             } else {
-                try {
-                    System.out.println("Give a student's name: ");
-                    String tName = reader.nextLine();
-                    dossier.addDocs(new Document(label, pages, findStudent(tName)));
-                } catch (NoPersonException ex) {
-
-                }
+                System.out.println("Give a student's name: ");
+                String tName = reader.nextLine();
+                dossier.addDocs(new Document(label, pages, findStudent(tName)));
             }
-        } catch (NoSuchDossierException ex){
+        } catch (NoPersonException | NoSuchDossierException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Create one now: ");
-            addDossier();
+            //System.out.println("Create one now: ");
+            //addDossier();
         }
     }
 
-    public Dossier findDossier(String dossierName) throws NoSuchDossierException{
+    public Dossier findDossier(String dossierName) throws NoSuchDossierException {
         Dossier retDoss = null;
         for (Dossier element : cabinet.getDossierList()) {
             if (element.getLabel().equals(dossierName)) {
@@ -326,7 +337,7 @@ public class MainMenu{
             }
         }
         if (retDoss == null) {
-            System.out.println("No dossier was found with the name: " + dossierName );
+            System.out.println("No dossier was found with the name: " + dossierName);
             System.out.println("You can add one now from the main menu.");
             ///start();
             throw new NoSuchDossierException("No dossier with the name of: " + dossierName + " was found");
@@ -334,7 +345,7 @@ public class MainMenu{
         return retDoss;
     }
 
-    public Teacher findTeacher(String name) throws NoPersonException{
+    public Teacher findTeacher(String name) throws NoPersonException {
         Teacher person = null;
         for (Teacher element : teacherList) {
             String fullName = element.getFirstName() + " " + element.getLastName();
@@ -343,7 +354,7 @@ public class MainMenu{
             }
         }
         if (person == null) {
-            throw new NoPersonException("No teacher was found with the name: " + name );
+            throw new NoPersonException("No teacher was found with the name: " + name);
         }
         return person;
     }
@@ -358,7 +369,7 @@ public class MainMenu{
             }
         }
         if (person == null) {
-            throw new NoPersonException("No student was found with the name: " + name );
+            throw new NoPersonException("No student was found with the name: " + name);
         }
         return person;
     }
@@ -371,7 +382,7 @@ public class MainMenu{
         try {
             Dossier dossier = findDossier(dossierName);
             dossier.removeDocFromDossier(label);
-        } catch (NoSuchDossierException ex)     {
+        } catch (NoSuchDossierException ex) {
             System.out.println("Create one now: ");
             addDossier();
         }
@@ -389,10 +400,10 @@ public class MainMenu{
         }
     }
 
-    public void addPerson(Scanner reader, String kindOfPerson) throws PersonAlreadyExistsException{
-        System.out.println("First name of the "+ kindOfPerson + ":");
+    public void addPerson(Scanner reader, String kindOfPerson) throws PersonAlreadyExistsException {
+        System.out.println("First name of the " + kindOfPerson + ":");
         String fName = reader.nextLine();
-        System.out.println("Last name of the "+ kindOfPerson + ":");
+        System.out.println("Last name of the " + kindOfPerson + ":");
         String lName = reader.nextLine();
         System.out.println("Birth year:");
         int year = Integer.parseInt(reader.nextLine());
@@ -456,11 +467,6 @@ public class MainMenu{
             studentList.remove(toRem);
         }
     }
-
-
-
-
-
 
 
 }

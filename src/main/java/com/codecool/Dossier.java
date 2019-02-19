@@ -85,5 +85,7 @@ public class Dossier implements java.io.Serializable, Iterable<Document> {
 
     }
 
-
+    public ArrayList<Document> getDocs() {
+        return docs;
+    }
 }

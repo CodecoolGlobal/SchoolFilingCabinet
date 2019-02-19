@@ -1,6 +1,9 @@
 package com.codecool;
 
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -99,9 +102,9 @@ public class MainMenu {
     public void dossiersMenu() {
         String chosen;
         String[] options = {"List all dossiers", "Add dossier", "Throw out dossier", "Back to Main MainMenu"};
-        showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
+            showMainMenu(options);
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
@@ -139,14 +142,14 @@ public class MainMenu {
 
     public void documentMenu() {
         String chosen;
-        String[] options = {"List all documents", "Add document", "Throw out document", "Back to Main MainMenu"};
-        showMainMenu(options);
+        String[] options = {"List all documents", "Add document", "Throw out document", "Kist documents by given person" ,"Back to Main MainMenu"};
         int toQuit = 1;
         while (toQuit != 0) {
+            showMainMenu(options);
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
-                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") || chosen.equals("0")) {
+                if (chosen.equals("1") || chosen.equals("2") || chosen.equals("3") ||chosen.equals("4") || chosen.equals("0")) {
                     break;
                 }
             }
@@ -162,6 +165,7 @@ public class MainMenu {
                 case 3:
                     removeDocuments();
                     break;
+                case 4: personsDocs();
                 case 0:
                     toQuit = 0;
                     start();
@@ -170,12 +174,59 @@ public class MainMenu {
         }
     }
 
+    public void personsDocs() {
+        System.out.println("Is it a \n 1. teacher or a \n 2. student document:");
+        String chosen;
+        Person person = null;
+        while (true) {
+            chosen = reader.nextLine();
+            if (chosen.equals("1") || chosen.equals("2")) {
+                break;
+            }
+        }
+        int num = Integer.parseInt(chosen);
+        try {
+            if (num == 1) {
+                System.out.println("Give a teacher's name: ");
+                String tName = reader.nextLine();
+                person = findTeacher(tName);
+            } else {
+                System.out.println("Give a student's name: ");
+                String tName = reader.nextLine();
+                person = findStudent(tName);
+            }
+        } catch (NoPersonException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        listSpecificDocs(person);
+
+    }
+
+    private void listSpecificDocs(Person person) {
+        if (cabinet.getDossierList().size() == 0) {
+            System.out.println("No dossiers/documents added yet, you can add one now.");
+        } else {
+            for (Dossier dossier : cabinet.getDossierList()) {
+                System.out.println(dossier.toString());
+                for (Document doc : dossier.getDocs()) {
+                    String fullName1 = person.getFullName();
+                    String fullName2 = doc.getPerson().getFullName();
+                    if (fullName1.equalsIgnoreCase(fullName2)) {
+                        System.out.println(doc.toString());
+                    }
+                }
+                System.out.println("----------------");
+            }
+        }
+    }
+
     public void teachersMenu() {
         String chosen;
         String[] options = {"List all teachers", "Add teacher", "Remove teacher", "Save changes to XML file", "Back to Main MainMenu"};
-        showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
+            showMainMenu(options);
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
@@ -213,9 +264,9 @@ public class MainMenu {
     public void studentMenu() {
         String chosen;
         String[] options = {"List all students", "Add student", "Remove teacher", "Save changes to XML file", "Back to Main MainMenu"};
-        showMainMenu(options);
         int toQuit = 1;
         while (toQuit != 0) {
+            showMainMenu(options);
             while (true) {
                 System.out.println("Choose an option from the above listed: ");
                 chosen = reader.nextLine();
